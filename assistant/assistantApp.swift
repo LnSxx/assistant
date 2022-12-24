@@ -1,17 +1,19 @@
 //
-//  assistantApp.swift
-//  assistant
+//  dailychecklistApp.swift
+//  dailychecklist
 //
-//  Created by Leonid Semenov on 14.12.2022.
+//  Created by Leonid Semenov on 24.10.2022.
 //
 
 import SwiftUI
 
 @main
-struct assistantApp: App {
+struct dailychecklistApp: App {
+    @StateObject private var checklist = Checklist()
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            СhecklistView().environmentObject(checklist)
         }
     }
 }
