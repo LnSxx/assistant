@@ -37,6 +37,7 @@ struct СhecklistView: View {
                         Label("Add check", systemImage: "square.and.pencil")
                             .labelStyle(.titleAndIcon)
                             .foregroundColor(.accentColor)
+                            .scenePadding(.bottom)
                             .scenePadding(.horizontal)
                     }
                 }
