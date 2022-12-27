@@ -46,14 +46,38 @@ func loadListOfTodoFromUD() -> [TodoModel] {
     return []
 }
 
-func setListOfTodoFromUD(todos: [TodoModel]) {
+func setListOfTodoToUD(todos: [TodoModel]) {
     do {
         let encoder = JSONEncoder()
         let encodedTodo = try encoder.encode(todos)
         UserDefaults.standard.removeObject(forKey: TodoModel.udKey)
         UserDefaults.standard.set(encodedTodo, forKey: TodoModel.udKey)
+        setLastVisit(date: Date.now)
     } catch {
         print("Unable to set TodoModel list (\(error))")
     }
 }
 
+func getLastVisit() -> Date {
+    if let userDefaultsLastVisit = UserDefaults.standard.data(forKey: "LAST_VISIT") {
+        do {
+            let decoder = JSONDecoder()
+            let lastVisit = try decoder.decode(Date.self, from: userDefaultsLastVisit)
+            return lastVisit
+        } catch {
+            print("Unable to load last visit (\(error))")
+        }
+    }
+    return Date.now
+}
+
+func setLastVisit(date: Date) {
+    do {
+        let encoder = JSONEncoder()
+        let encodedDate = try encoder.encode(date)
+        UserDefaults.standard.removeObject(forKey: "LAST_VISIT")
+        UserDefaults.standard.set(encodedDate, forKey: "LAST_VISIT")
+    } catch {
+        print("Unable to set last visit (\(error))")
+    }
+}
