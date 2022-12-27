@@ -28,20 +28,16 @@ struct СhecklistView: View {
                         Text("\(checked.count)/\(model.checklist.count)")
                     }
                 }
-                Spacer()
-                HStack {
-                    Spacer()
+            }.navigationTitle("Daily checklist")
+                .toolbar {
                     NavigationLink {
                         CreateCheck()
                     } label: {
                         Label("Add check", systemImage: "square.and.pencil")
                             .labelStyle(.titleAndIcon)
                             .foregroundColor(.accentColor)
-                            .scenePadding(.bottom)
-                            .scenePadding(.horizontal)
                     }
                 }
-            }.navigationTitle("Daily checklist")
         }
     }
 }

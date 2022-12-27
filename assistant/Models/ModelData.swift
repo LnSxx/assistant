@@ -14,12 +14,12 @@ final class Checklist: ObservableObject {
     
     func addCheck(newTodo: TodoModel) {
         self.checklist.insert(newTodo, at: 0)
-        setListOfTodoFromUD(todos: self.checklist.reversed())
+        setListOfTodoToUD(todos: self.checklist.reversed())
     }
     
     func delete(at offsets: IndexSet) {
         self.checklist.remove(atOffsets: offsets)
-        setListOfTodoFromUD(todos: self.checklist.reversed())
+        setListOfTodoToUD(todos: self.checklist.reversed())
     }
     
     func editTodo(editedTodo: TodoModel) {
@@ -31,7 +31,7 @@ final class Checklist: ObservableObject {
             }
         }
         self.checklist = todoList
-        setListOfTodoFromUD(todos: todoList.reversed())
+        setListOfTodoToUD(todos: todoList.reversed())
     }
     
     func toggleIsDoneInTodo(for todo: TodoModel) {
