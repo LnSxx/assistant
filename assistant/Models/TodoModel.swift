@@ -81,3 +81,8 @@ func setLastVisit(date: Date) {
         print("Unable to set last visit (\(error))")
     }
 }
+
+func deleteAllFromUserDefaults() {
+    UserDefaults.standard.removeObject(forKey: TodoModel.udKey)
+    UserDefaults.standard.removeObject(forKey: "LAST_VISIT")
+}

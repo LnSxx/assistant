@@ -1,7 +1,7 @@
 //
 //  ContentView.swift
 //  dailychecklist
-//E
+//
 //  Created by Leonid Semenov on 24.10.2022.
 //
 
@@ -9,6 +9,7 @@ import SwiftUI
 
 struct СhecklistView: View {
     @EnvironmentObject var model: Checklist
+    @State private var showDeleteChecklistData = false
     
     private var checked:  [TodoModel]  {
         model.checklist.filter {$0.isDone}
@@ -30,11 +31,23 @@ struct СhecklistView: View {
                 }
             }.navigationTitle("Daily checklist")
                 .toolbar {
+                    Button {
+                        showDeleteChecklistData.toggle()
+                    } label: {
+                        Label("Remove", systemImage: "trash")
+                            .labelStyle(.iconOnly)
+                            .foregroundColor(.secondary)
+                    }
+                    .confirmationDialog("Delete all checks?", isPresented: $showDeleteChecklistData, titleVisibility: .visible) {
+                        Button("Clear checklist", role: .destructive) {
+                            model.deleteAll()
+                        }
+                    }
                     NavigationLink {
                         CreateCheck()
                     } label: {
-                        Label("Add check", systemImage: "square.and.pencil")
-                            .labelStyle(.titleAndIcon)
+                        Label("Add check", systemImage: "plus.circle")
+                            .labelStyle(.iconOnly)
                             .foregroundColor(.accentColor)
                     }
                 }

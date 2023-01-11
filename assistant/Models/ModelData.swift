@@ -37,5 +37,10 @@ final class Checklist: ObservableObject {
     func toggleIsDoneInTodo(for todo: TodoModel) {
         editTodo(editedTodo: todo.copyWith(isDone: !todo.isDone))
     }
+    
+    func deleteAll() {
+        self.checklist = []
+        deleteAllFromUserDefaults()
+    }
 }
 
