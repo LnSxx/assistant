@@ -15,6 +15,7 @@ struct ExpenseChartView: View {
     var body: some View {
         VStack {
             TotalExpensesView(totalValue: totalAmount)
+                .padding()
             PieChart(
                 values: values
             )
@@ -25,6 +26,8 @@ struct ExpenseChartView: View {
             .scaledToFit()
             PieChartLegend(values: values, names: names)
             .padding(.bottom)
+            .padding(.leading)
+            .padding(.trailing)
         }
     }
 }

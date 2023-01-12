@@ -72,13 +72,16 @@ struct AddExpense: View {
                             .fontWeight(.regular)
                     }
                     Button {
-                        addExpenseModel.addExpense(context: viewContext)
-                        self.presentationMode.wrappedValue.dismiss()
+                        if addExpenseModel.isFormValid {
+                            addExpenseModel.addExpense(context: viewContext)
+                            self.presentationMode.wrappedValue.dismiss()
+                        }
                     } label: {
                         Text("Add")
                             .foregroundColor(.accentColor)
                             .fontWeight(.semibold)
                     }
+                    .disabled(!addExpenseModel.isFormValid)
                 }
         }
     }
