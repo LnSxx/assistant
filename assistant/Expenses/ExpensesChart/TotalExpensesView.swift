@@ -13,7 +13,7 @@ struct TotalExpensesView: View {
         HStack {
             Text("Total:")
             Spacer()
-            Text(String(totalValue))
+            Text(String(totalValue.getAmountFormatted()))
                 .foregroundColor(.accentColor)
                 .fontWeight(.bold)
         }

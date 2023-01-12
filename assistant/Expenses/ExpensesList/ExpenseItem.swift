@@ -20,11 +20,20 @@ struct ExpenseItem: View {
                         .foregroundColor(.primary).opacity(0.5)
                 }
                 Spacer()
-                Text(String(expenseModel.amount))
+                Text(expenseModel.amount.getAmountFormatted())
                     .foregroundColor(.accentColor)
             }
         }
         .padding(.vertical, 1)
             
+    }
+}
+
+extension Double {
+    func getAmountFormatted() -> String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = NumberFormatter.Style.currency
+        formatter.currencySymbol = ""
+        return formatter.string(from: self as NSNumber) ?? ""
     }
 }

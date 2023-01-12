@@ -11,7 +11,7 @@ struct ExpensesSectionList: View {
     var expenses: [ExpenseModel]
     
     var grouped: [Date: [ExpenseModel]] {
-        return groupedEpisodesByMonth(expenses)
+        return groupedExpensesByDay(expenses)
     }
     
     var totalAmount: Double {
@@ -46,23 +46,30 @@ struct ExpensesSectionList: View {
             values: self.amounts,
             names: self.categoryNames
         )
+        .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+        .background(.background)
         ForEach(grouped.sorted {
             $0.0 > $1.0
         }, id: \.key) { key, value in
-            ExpensesListSection(expensesListSectionModel: ExpensesListSectionModel(expenseItems: value, date: key)
+            return ExpensesListSection(expensesListSectionModel: ExpensesListSectionModel(expenseItems: value, date: key)
             )
         }
     }
 }
 
-func groupedEpisodesByMonth(_ expenses: [ExpenseModel]) -> [Date: [ExpenseModel]] {
-    let empty: [Date: [ExpenseModel]] = [:]
-    return expenses.reduce(into: empty) { acc, cur in
-        let components = Calendar.current.dateComponents([.day], from: cur.date!)
-        let date = Calendar.current.date(from: components)!
-        let existing = acc[date] ?? []
-        acc[date] = existing + [cur]
+func groupedExpensesByDay(_ expenses: [ExpenseModel]) -> [Date: [ExpenseModel]] {
+    var result: [Date: [ExpenseModel]] = [:]
+    for expense in expenses {
+        let expenseDay = Calendar.current.startOfDay(for: expense.date!)
+        if result[expenseDay] != nil {
+            var valueForDate = result[expenseDay]
+            valueForDate!.append(expense)
+            result[expenseDay] = valueForDate
+        } else {
+            result[expenseDay] = [expense]
+        }
     }
+    return result
 }
 
 struct CategoryExpense {
